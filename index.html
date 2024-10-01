@@ -1,33 +1,35 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>nixware</title>
+    <title>Matrix Rain with Image</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
         * {margin: 0; padding: 0;}
-
-        /* Body styling */
         body {
-            background-color: #141414;
-            margin: 0;
+            background-color: black;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
-
-        /* Container for the image and text */
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
         .container {
             text-align: center;
+            z-index: 1;
         }
-
         .container img {
             max-width: 100%;
             height: auto;
         }
-
         .container p {
             color: white;
             font-size: 18px;
@@ -36,9 +38,60 @@
     </style>
 </head>
 <body>
+
+    <!-- Container for image and text -->
     <div class="container">
-        <img src="https://s1.gifyu.com/images/SAkBV.jpg" alt="Nixware Image">
+        <img src="https://s1.gifyu.com/images/SAkBV.jpg" alt="Image">
         <p>Welcome to Topg.cc</p>
     </div>
+
+    <!-- Matrix Rain Canvas -->
+    <canvas id="c"></canvas>
+
+    <script>
+        var c = document.getElementById("c");
+        var ctx = c.getContext("2d");
+
+        //making the canvas full screen
+        c.height = window.innerHeight;
+        c.width = window.innerWidth;
+
+        //matrix characters
+        var english = "1001010101110101010101010010101000101011101111010101010110101010101010101110000101";
+        english = english.split("");
+
+        var font_size = 9;
+        var columns = c.width / font_size; 
+        var drops = [];
+
+        for (var x = 0; x < columns; x++) drops[x] = 1;
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, c.width, c.height);
+
+            ctx.fillStyle = "#0F0";
+            ctx.font = font_size + "px arial";
+
+            for (var i = 0; i < drops.length; i++) {
+                var text = english[Math.floor(Math.random() * english.length)];
+                ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+                if (drops[i] * font_size > c.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
+
+        // Handle window resizing
+        window.addEventListener('resize', function () {
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+            columns = c.width / font_size;
+            drops = [];
+            for (var x = 0; x < columns; x++) drops[x] = 1;
+        });
+    </script>
 </body>
 </html>
