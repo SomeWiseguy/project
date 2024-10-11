@@ -3,6 +3,9 @@
     <title>Matrix Rain with Image</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <audio controls autoplay>
+    <source src="horse.mp3" type="audio/mpeg">
+    </audio>
     <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <style>
         * {margin: 0; padding: 0;}
@@ -71,7 +74,7 @@
             ctx.fillRect(0, 0, c.width, c.height);
 
             ctx.fillStyle = "#0F0";
-            ctx.font = font_size + "px arial";
+            ctx.font = font_size + "monospace";
 
             for (var i = 0; i < drops.length; i++) {
                 var text = english[Math.floor(Math.random() * english.length)];
